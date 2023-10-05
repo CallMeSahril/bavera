@@ -134,14 +134,7 @@ class GameView extends StatelessWidget {
                               "Jika Selesai Tekan Ya, Jika Belum Tekan Tidak",
                           onYes: () {
                             var lap = 0;
-                            print(controller.nameSatuController.text);
-                            print(controller.nameDuaController.text);
-                            print(controller.nameTigaController.text);
-                            print(controller.nameEmpatController.text);
-                            print(controller.countTeamOne);
-                            print(controller.countTeamTwo);
-                            print(controller.countKOK);
-                            print(controller.selectedItem.value);
+
                             if (controller.selectedItem.value == 'Lapangan 1') {
                               lap = 1;
                             } else if (controller.selectedItem.value ==
@@ -160,6 +153,13 @@ class GameView extends StatelessWidget {
                                 skorTeamDua: controller.countTeamTwo.value,
                                 kok: controller.countKOK.value,
                                 lapangan: lap);
+                            controller.nameSatuController.clear();
+                            controller.nameDuaController.clear();
+                            controller.nameTigaController.clear();
+                            controller.nameEmpatController.clear();
+                            controller
+                                .resetAllValues(); // Reset other controller variables
+
                             Get.back();
                           },
                           onNo: () {

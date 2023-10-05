@@ -100,4 +100,10 @@ class GameController extends GetxController {
     });
     isLoading.value = false;
   }
+
+  void resetAllValues() {
+    resetValueOne();
+    resetValueTwo();
+    resetValueKok();
+  }
 }

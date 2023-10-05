@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SearchTextField extends StatelessWidget {
   final String hintText;
   final ValueChanged<String>? onChanged;
+  final Function(PointerDownEvent)? onTap;
   final Widget? widget;
   final TextEditingController? controller;
   const SearchTextField(
       {super.key,
       required this.hintText,
       this.onChanged,
+      this.onTap,
       this.controller,
       this.widget});
 
@@ -30,6 +33,7 @@ class SearchTextField extends StatelessWidget {
           SizedBox(width: 8),
           Expanded(
             child: TextFormField(
+              onTapOutside: onTap,
               controller: controller,
               onChanged: onChanged,
               style: const TextStyle(color: Colors.black),
