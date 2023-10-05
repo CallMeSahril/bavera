@@ -1,0 +1,3 @@
+const baseUrl = "https://dqkrpdkhevvfmcshtpdk.supabase.co/rest/v1";
+const apiKey =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxa3JwZGtoZXZ2Zm1jc2h0cGRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY0MDY1NjQsImV4cCI6MjAxMTk4MjU2NH0.j8Oee57wQvdm-WaXpBLqTUszXtMXeCfCp3HI8RGir0I";

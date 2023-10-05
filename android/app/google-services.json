@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720904682771",
+    "project_id": "bavera-928f0",
+    "storage_bucket": "bavera-928f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720904682771:android:48083ef8f70ba3a547eee6",
+        "android_client_info": {
+          "package_name": "com.bavera.bavera"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgLhYvIWjfp-pr4LdZZH04FnF9nSSBwdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,23 @@
+name: bavera
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: '>=3.1.0-139.0.dev <4.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  get: 4.6.5
+  get_cli: ^1.8.4
+  http: ^0.13.5
+  supabase_flutter: ^1.10.19
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
