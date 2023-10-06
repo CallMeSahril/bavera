@@ -3,32 +3,33 @@ class PayEntity {
   final DateTime? createdAt;
   final List<String> name;
   final List<int> kok;
-  final List<int> lapangan;
+  final int price;
+  final String username;
 
   PayEntity({
+    required this.username,
     this.id,
     this.createdAt,
     required this.name,
     required this.kok,
-    required this.lapangan,
+    required this.price,
   });
-  // factory MatchEntity.fromJson(Map<String, dynamic> json) => MatchEntity(
-  //       nameSatu: json["name_satu"],
 
-  //       kok: json["kok"],
+  factory PayEntity.fromJson(Map<String, dynamic> json) => PayEntity(
+        name: List<String>.from(json["name"].map((x) => x)),
+        kok: List<int>.from(json["kok"].map((x) => x)),
+        price: json["price"],
+        username: json["username"],
+        id: json["id"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
 
-  //       lapangan: json["lapangan"],
-  //       id: json["id"],
-  //       createdAt: DateTime.parse(json["created_at"]),
-  //     );
-
-  // Map<String, dynamic> toJson() => {
-  //       "name_satu": nameSatu,
-
-  //       "kok": kok,
-
-  //       "lapangan": lapangan,
-  //       "id": id,
-  //       "created_at": createdAt!.toIso8601String(),
-  //     };
+  Map<String, dynamic> toJson() => {
+        "name": List<dynamic>.from(name.map((x) => x)),
+        "kok": List<dynamic>.from(kok.map((x) => x)),
+        "price": price,
+        "username": price,
+        "id": id,
+        "created_at": createdAt!.toIso8601String(),
+      };
 }

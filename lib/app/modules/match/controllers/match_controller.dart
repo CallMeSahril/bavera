@@ -1,4 +1,5 @@
 import 'package:bavera/app/data/entities/match_entities.dart';
+import 'package:bavera/app/data/entities/pay_entities.dart';
 import 'package:bavera/app/data/repositories/bavera_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class MatchController extends GetxController {
   List<MatchEntity>? listMatch;
+  List<PayEntity>? listPayment;
+
   RxBool isLoading = false.obs;
   TextEditingController nameController = TextEditingController();
 

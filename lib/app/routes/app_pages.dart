@@ -40,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PAY,
-      page: () => const PayView(),
+      page: () => PayView(),
       binding: PayBinding(),
     ),
     GetPage(

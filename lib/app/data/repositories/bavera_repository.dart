@@ -8,11 +8,56 @@
 import 'dart:convert';
 
 import 'package:bavera/app/data/entities/match_entities.dart';
+import 'package:bavera/app/data/entities/pay_entities.dart';
 import 'package:bavera/app/data/entities/user.dart';
 import 'package:bavera/app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class BaveraRepository {
+  Future<List<MatchEntity>> findByIdMatch(String userName) async {
+    var url = Uri.parse('$baseUrl/match?username=eq.$userName&select=*');
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Range': '0-9'
+    };
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      if (response.body.isEmpty) {
+        return [];
+      } else {
+        return (jsonDecode(response.body) as List)
+            .map((e) => MatchEntity.fromJson(e))
+            .toList();
+      }
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<PayEntity>> findById(String userName) async {
+    var url = Uri.parse('$baseUrl/payment?username=eq.$userName&select=*');
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Range': '0-9'
+    };
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      if (response.body.isEmpty) {
+        return [];
+      } else {
+        return (jsonDecode(response.body) as List)
+            .map((e) => PayEntity.fromJson(e))
+            .toList();
+      }
+    } else {
+      return [];
+    }
+  }
+
   Future<List<MatchEntity>> matchListAll() async {
     var url = Uri.parse('$baseUrl/match?select=*');
     var headers = {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'};
@@ -21,6 +66,24 @@ class BaveraRepository {
     return (jsonDecode(response.body) as List)
         .map((e) => MatchEntity.fromJson(e))
         .toList();
+  }
+
+  Future<List<PayEntity>> paymentListAll() async {
+    var url = Uri.parse('$baseUrl/payment?select=*');
+    var headers = {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'};
+    final response = await http.get(url, headers: headers);
+    print("ini update paymentListAll ${response.statusCode}");
+    if (response.statusCode == 200) {
+      if (response.body.isEmpty) {
+        return [];
+      } else {
+        return (jsonDecode(response.body) as List)
+            .map((e) => PayEntity.fromJson(e))
+            .toList();
+      }
+    } else {
+      return [];
+    }
   }
 
   Future<List<UserEntity>> usersListAll() async {
@@ -32,7 +95,69 @@ class BaveraRepository {
         .map((e) => UserEntity.fromJson(e))
         .toList();
   }
+
+  Future<bool> updatePayment({
+    required String userName,
+    // DateTime? createdAt,
+    required List<String> name,
+    required List<int> kok,
+  }) async {
+    var url = Uri.parse('$baseUrl/payment?username=eq.$userName');
+
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+    };
+
+    var updateFields = <String, dynamic>{};
+    // if (id != null) updateFields["id"] = id;
+    // if (createdAt != null) updateFields["created_at"] = createdAt;
+    if (name != null) updateFields["name"] = name;
+    if (kok != null && kok.isNotEmpty) {
+      var updateKok = kok.toList();
+      updateFields["kok"] = updateKok;
+    }
+    {
+      updateFields["kok"] = kok;
+    }
+
+    final res =
+        await http.patch(url, headers: headers, body: jsonEncode(updateFields));
+
+    print("ini update payment ${res.statusCode}");
+
+    return res.statusCode == 204;
+  }
+
+  Future<bool> postPayment({
+    required String userName,
+    required List<String> name,
+    required List<int> kok,
+  }) async {
+    var url = Uri.parse('$baseUrl/payment');
+
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+    };
+
+    var body = {
+      "name": name,
+      "kok": kok,
+      "username": userName,
+    };
+
+    final res = await http.post(url, headers: headers, body: jsonEncode(body));
+
+    return res.statusCode == 201;
+  }
 }
+
+
 // class BaveraRepository {
 //  Future<List<MatchEntity>> getMatch({
 //     required String nameSatu,
