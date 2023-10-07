@@ -7,8 +7,10 @@
 // import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:bavera/app/data/entities/admin_entities.dart';
 import 'package:bavera/app/data/entities/match_entities.dart';
 import 'package:bavera/app/data/entities/pay_entities.dart';
+import 'package:bavera/app/data/entities/tabungan_entities.dart';
 import 'package:bavera/app/data/entities/user.dart';
 import 'package:bavera/app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +60,29 @@ class BaveraRepository {
     }
   }
 
+  Future<AdminEntity?> findByUserNameAdmin(String userName) async {
+    var url = Uri.parse('$baseUrl/admin?name=eq.$userName&select=*');
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Range': '0-9'
+    };
+    var response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      if (response.body.isEmpty) {
+        return AdminEntity.empty();
+      } else {
+        return (jsonDecode(response.body) as List)
+            .map((e) => AdminEntity.fromJson(e))
+            .toList()
+            .first;
+      }
+    } else {
+      return AdminEntity.empty();
+    }
+  }
+
   Future<List<MatchEntity>> matchListAll() async {
     var url = Uri.parse('$baseUrl/match?select=*');
     var headers = {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'};
@@ -65,6 +90,16 @@ class BaveraRepository {
 
     return (jsonDecode(response.body) as List)
         .map((e) => MatchEntity.fromJson(e))
+        .toList();
+  }
+
+  Future<List<AdminEntity>> adminListAll() async {
+    var url = Uri.parse('$baseUrl/admin?select=*');
+    var headers = {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'};
+    final response = await http.get(url, headers: headers);
+
+    return (jsonDecode(response.body) as List)
+        .map((e) => AdminEntity.fromJson(e))
         .toList();
   }
 
@@ -96,11 +131,22 @@ class BaveraRepository {
         .toList();
   }
 
+  Future<List<TabunganEntity>> usersTabunganAll() async {
+    var url = Uri.parse('$baseUrl/tabungan?select=*');
+    var headers = {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'};
+    final response = await http.get(url, headers: headers);
+
+    return (jsonDecode(response.body) as List)
+        .map((e) => TabunganEntity.fromJson(e))
+        .toList();
+  }
+
   Future<bool> updatePayment({
     required String userName,
     // DateTime? createdAt,
-    required List<String> name,
-    required List<int> kok,
+    List<String>? name,
+    List<int>? kok,
+    bool? isPay,
   }) async {
     var url = Uri.parse('$baseUrl/payment?username=eq.$userName');
 
@@ -115,6 +161,7 @@ class BaveraRepository {
     // if (id != null) updateFields["id"] = id;
     // if (createdAt != null) updateFields["created_at"] = createdAt;
     if (name != null) updateFields["name"] = name;
+    if (isPay != null) updateFields["ket"] = isPay;
     if (kok != null && kok.isNotEmpty) {
       var updateKok = kok.toList();
       updateFields["kok"] = updateKok;
@@ -153,6 +200,26 @@ class BaveraRepository {
 
     final res = await http.post(url, headers: headers, body: jsonEncode(body));
 
+    return res.statusCode == 201;
+  }
+
+  Future<bool> postTabungan({
+    required String nama,
+    required List<int> duit,
+  }) async {
+    var url = Uri.parse('$baseUrl/tabungan');
+
+    var headers = {
+      'apikey': apiKey,
+      'Authorization': 'Bearer $apiKey',
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+    };
+
+    var body = {"name": nama, "duit": duit};
+
+    final res = await http.post(url, headers: headers, body: jsonEncode(body));
+    print(res.statusCode);
     return res.statusCode == 201;
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:bavera/app/data/entities/admin_entities.dart';
 import 'package:bavera/app/data/entities/match_entities.dart';
 import 'package:bavera/app/data/entities/pay_entities.dart';
+import 'package:bavera/app/data/entities/tabungan_entities.dart';
 import 'package:bavera/app/data/entities/user.dart';
 import 'package:bavera/app/data/repositories/bavera_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +12,39 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
+  test("list tabungan", () async {
+    final baveraRepo = BaveraRepository();
+    var adminFuture = await baveraRepo.usersTabunganAll();
+
+    print(adminFuture.first.username);
+  });
+  test("add tabungan", () async {
+    final baveraRepo = BaveraRepository();
+    AdminEntity? admin;
+    var adminFuture = baveraRepo.findByUserNameAdmin("a");
+    if (adminFuture != null) {
+      admin = await adminFuture;
+    }
+
+    if (admin != null) {
+      // Admin ditemukan
+      print(admin.username);
+    } else {
+      // Admin tidak ditemukan
+      print("Admin tidak ditemukan");
+    }
+
+// Periksa apakah admin ditemukan
+    if (admin != null) {
+      // Admin ditemukan
+      print(admin.username);
+    } else {
+      // Admin tidak ditemukan
+      print("Admin tidak ditemukan");
+    }
+    // bool updatePay =
+    //     await baveraRepo.postTabungan(duit: [3000], nama: "Sahril");
+  });
   test("test username match id", () async {
     final baveraRepo = BaveraRepository();
     var name = ('sahril');
@@ -37,10 +72,10 @@ void main() {
 
   test("test username payment id", () async {
     final baveraRepo = BaveraRepository();
-    var name = ('doni');
+    var name = ('@sahril');
     List<PayEntity> result = await baveraRepo.findById(name);
 
-    print(result);
+    print(result.first.username);
   });
   test('update paymanet', () async {
     final baveraRepo = BaveraRepository();

@@ -10,6 +10,11 @@ abstract class Routes {
   static const PAY = _Paths.PAY;
   static const REPORT = _Paths.REPORT;
   static const DETAILREPORT = _Paths.DETAILREPORT;
+  static const LOGIN = _Paths.LOGIN;
+  static const DASHBOARDADMIN = _Paths.DASHBOARDADMIN;
+  static const WARP = _Paths.WARP;
+  static const LOGOUT = _Paths.LOGOUT;
+  static const TABUNGAN = _Paths.TABUNGAN;
 }
 
 abstract class _Paths {
@@ -21,4 +26,9 @@ abstract class _Paths {
   static const PAY = '/pay';
   static const REPORT = '/report';
   static const DETAILREPORT = '/detailreport';
+  static const LOGIN = '/login';
+  static const DASHBOARDADMIN = '/dashboardadmin';
+  static const WARP = '/warp';
+  static const LOGOUT = '/logout';
+  static const TABUNGAN = '/tabungan';
 }

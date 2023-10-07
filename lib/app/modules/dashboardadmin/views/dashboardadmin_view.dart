@@ -1,33 +1,26 @@
-import 'package:bavera/app/modules/game/views/game_view.dart';
+import 'package:bavera/app/core/services/local_db.dart';
 import 'package:bavera/app/modules/home/views/home_view.dart';
-import 'package:bavera/app/modules/login/views/login_view.dart';
-import 'package:bavera/app/modules/match/views/match_view.dart';
+import 'package:bavera/app/modules/logout/views/logout_view.dart';
 import 'package:bavera/app/modules/pay/views/pay_view.dart';
 import 'package:bavera/app/modules/report/views/report_view.dart';
+import 'package:bavera/app/modules/tabungan/views/tabungan_view.dart';
+import 'package:bavera/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/dashboard_controller.dart';
+import '../controllers/dashboardadmin_controller.dart';
 
-class DashboardView extends GetView<DashboardController> {
-  const DashboardView({Key? key}) : super(key: key);
-  @override
+class DashboardadminView extends GetView<DashboardadminController> {
+  const DashboardadminView({Key? key}) : super(key: key);
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(
+    return GetBuilder<DashboardadminController>(
       builder: (controller) {
         return Scaffold(
           body: SafeArea(
             child: IndexedStack(
               index: controller.tabIndex,
-              children: [
-                GameView(),
-                MatchView(),
-                LoginView(),
-                // PayView(),
-                // ReportView(),
-                // HomeView(),
-              ],
+              children: [PayView(), ReportView(), TabunganView(), LogoutView()],
             ),
           ),
           // bottomNavigationBar: _buildBottomNavigationBar(controller),
@@ -41,7 +34,16 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildBottomNavigationBar(DashboardController controller) {
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: const Text('DashboardadminView'),
+  //       centerTitle: true,
+  //     ),
+
+  // }
+  Widget _buildBottomNavigationBar(DashboardadminController controller) {
     return BottomNavigationBar(
       unselectedItemColor: Colors.black26,
       selectedItemColor: const Color(0xff5CE1E6),
@@ -52,30 +54,25 @@ class DashboardView extends GetView<DashboardController> {
       elevation: 0,
       items: [
         _bottomNavigationBarItem(
-          icon: Icons.play_arrow,
-          label: 'Game',
-          isActive: controller.tabIndex == 1,
+          icon: Icons.payment,
+          label: 'Payment',
+          isActive: controller.tabIndex == 4,
         ),
         _bottomNavigationBarItem(
-          icon: Icons.gamepad,
-          label: 'Match',
-          isActive: controller.tabIndex == 2,
+          icon: Icons.history,
+          label: 'Laporan',
+          isActive: controller.tabIndex == 0,
         ),
         _bottomNavigationBarItem(
-          icon: Icons.person,
-          label: 'Login',
+          icon: Icons.money,
+          label: 'Tabungan',
+          isActive: controller.tabIndex == 0,
+        ),
+        _bottomNavigationBarItem(
+          icon: Icons.logout,
+          label: 'Logout',
           isActive: controller.tabIndex == 3,
         ),
-        // _bottomNavigationBarItem(
-        //   icon: Icons.history,
-        //   label: 'Laporan',
-        //   isActive: controller.tabIndex == 4,
-        // ),
-        // _bottomNavigationBarItem(
-        //   icon: Icons.person,
-        //   label: 'Home',
-        //   isActive: controller.tabIndex == 0,
-        // ),
       ],
     );
   }

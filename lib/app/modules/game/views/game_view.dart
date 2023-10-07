@@ -1,4 +1,3 @@
-import 'package:bavera/app/data/entities/match_entities.dart';
 import 'package:bavera/app/widget/mydialog.dart';
 import 'package:bavera/app/widget/mydropdown.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,8 @@ class GameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('GameView'),
+          backgroundColor: Colors.teal,
+          title: const Text('Game'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -23,7 +23,7 @@ class GameView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Obx(
             () => controller.isLoading.value
-                ? CircularProgressIndicator()
+                ? Center(child: CircularProgressIndicator())
                 : Column(
                     children: [
                       _buildTeam(
@@ -74,7 +74,7 @@ class GameView extends StatelessWidget {
                                               Get.back();
                                             },
                                             title: "Reset",
-                                            content: ""),
+                                            content: Text("")),
                                       );
                                     }),
                               ),
@@ -118,7 +118,7 @@ class GameView extends StatelessWidget {
                                               Get.back();
                                             },
                                             title: "Reset",
-                                            content: ""),
+                                            content: Text("")),
                                       );
                                     }),
                               ),
@@ -139,10 +139,11 @@ class GameView extends StatelessWidget {
                             context: context,
                             builder: (context) => MyDialog(
                                 title: "Game Sudah Selesai?",
-                                content:
-                                    "Jika Selesai Tekan Ya, Jika Belum Tekan Tidak",
+                                content: Text(
+                                    "Jika Selesai Tekan Ya, Jika Belum Tekan Tidak"),
                                 onYes: () async {
-                                  controller.isLoadingOn(false);
+                                  controller.isLoadingOn(true);
+                                  Get.back();
                                   var lap = 0;
 
                                   if (controller.selectedItem.value ==
@@ -284,8 +285,6 @@ class GameView extends StatelessWidget {
                                   controller.resetAllValues();
 
                                   await controller.isLoadingOn(false);
-
-                                  Get.back();
                                 },
                                 onNo: () {
                                   Get.back();
@@ -361,7 +360,7 @@ class GameView extends StatelessWidget {
                                 Get.back();
                               },
                               title: "Reset",
-                              content: ""),
+                              content: Text("")),
                         );
                       },
                       child: Icon(

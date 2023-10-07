@@ -5,7 +5,7 @@ class MyDialog extends StatelessWidget {
   final Function() onYes;
   final Function() onNo;
   String title;
-  String content;
+  Widget content;
 
   MyDialog(
       {Key? key,
@@ -19,7 +19,7 @@ class MyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('$title'),
-      content: Text('$content'),
+      content: content,
       actions: [
         TextButton(
           onPressed: onYes,

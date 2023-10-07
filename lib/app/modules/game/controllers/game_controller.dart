@@ -94,6 +94,7 @@ class GameController extends GetxController {
 
   isLoadingOn(bool isLosding) {
     isLoading.value = isLosding;
+    update();
   }
 
   onClikFun() async {
@@ -167,7 +168,12 @@ class GameController extends GetxController {
     required List<String> name,
     required List<int> kok,
   }) async {
+    int price = 0;
+    if (!userName.startsWith('@')) {
+      price = 12000;
+    }
     await Supabase.instance.client.from('payment').insert({
+      'price': price,
       'username': userName,
       'name': name,
       'kok': kok,
